@@ -47,15 +47,17 @@ __Install dependencies__
 
 `python3 -m pip install -r requirements.txt`
 
-__Run development server__
+__Run the server...__
 
 `python3 run_server.py`
 
-__or directly:__
+This code asks wether the (d)evelopment or (p)roduction server is to be run.
+
+__...or run the development server directly using flask__
 
 `python3 server.py`
 
-__Run production server__
+__...or run the production server directly using gunicorn__
 
 `gunicorn -c gunicorn.conf.py server:app`
 
@@ -73,8 +75,8 @@ __Setup script:__
 ```
 
 __Or manually:__
-```npx create-react-app websocket-client
-cd websocket-client
+```npx create-react-app client
+cd client
 npm install socket.io-client@^4.7.5
 ```
 
