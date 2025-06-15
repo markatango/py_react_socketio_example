@@ -20,8 +20,8 @@ fi
 # Check if we're in a React app directory
 if [ ! -f "package.json" ]; then
     echo "Creating new React app..."
-    npx create-react-app websocket-client
-    cd websocket-client
+    npx create-react-app client
+    cd client
 else
     echo "Using existing React app directory"
 fi
