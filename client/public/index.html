@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="WebSocket Client - Real-time communication with Flask-SocketIO server"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>WebSocket Client</title>
+    <style>
+      /* Basic loading styles */
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f3f4f6;
+      }
+      
+      /* Loading spinner styles */
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f3f4f6;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      .loading-text {
+        margin-left: 1rem;
+        color: #6b7280;
+        font-size: 1rem;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Hide loading when React app loads */
+      #root:not(:empty) + .loading-container {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; background-color: #fef2f2; color: #991b1b; border: 1px solid #fecaca; border-radius: 0.5rem; margin: 2rem;">
+        <h2>JavaScript Required</h2>
+        <p>You need to enable JavaScript to run this WebSocket client application.</p>
+        <p>Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
+    
+    <!-- React app will be mounted here -->
+    <div id="root"></div>
+    
+    <!-- Loading fallback (shown while React loads) -->
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Loading WebSocket Client...</div>
+    </div>
+    
+    <!-- 
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+      
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+      
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>

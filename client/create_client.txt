@@ -1,0 +1,16 @@
+# Check Node version
+node --version  # Should show v22.16.0
+
+# Setup (run the setup script or manually):
+chmod +x setup_client.sh
+./setup_client.sh
+
+# Or manually:
+npx create-react-app websocket-client
+cd websocket-client
+npm install socket.io-client@^4.7.5
+
+# Replace src/App.js and src/App.css with provided files
+# Start development server
+npm start
+
