@@ -7,4 +7,12 @@ timeout = 120
 keepalive = 2
 max_requests = 1000
 max_requests_jitter = 50
-preload_app = False
+preload_app = True  # Changed to True to prevent recursion
+
+# Disable detailed logging to prevent recursion issues
+loglevel = "warning"
+access_log_format = '%(h)s "%(r)s" %(s)s %(b)s'
+
+# Fix for eventlet compatibility issues
+import eventlet
+eventlet.monkey_patch()
