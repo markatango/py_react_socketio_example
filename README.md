@@ -36,6 +36,8 @@ Implementing socket.io communications between python and node applications requi
 * react-dom: ^18.2.0
 * socket.io-client: ^4.8.1
 
+Just to be sure, you can run `python3 diagnostic.py` and it will confirm versions are good and test a few other things like the server port is available.
+
 ## Start the python server:
 `cd server`
 
@@ -64,9 +66,13 @@ __...or run the production server directly using gunicorn__
 ## Set up client
 `cd client`
 
+__Add an `.env` file__ 
+containing: `REACT_APP_SERVER_URL=<url:port for the wherever you installed the server>`
+The client will default to `http://localhost:5000` if you don't specify otherwise.
+
 __Check Node version__
 
-`node --version  # Should show v22.16.0`
+`node --version  # Should show v22.16.0 or at least something >= v18.0.0`
 
 __Setup script:__
 
