@@ -1,6 +1,10 @@
+
+// App.js
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import './App.css';
+
+
 
 function App() {
   const [randomNumber, setRandomNumber] = useState(0);
@@ -10,46 +14,53 @@ function App() {
   const [buttonState, setButtonState] = useState(false);
   const [clientId] = useState(() => Math.random().toString(36).substr(2, 9));
   const [datetimeValue, setDatetimeValue] = useState('');
-
+  const SERVER_URL = process.env(REACT_APP_SERVER_URL) || 'localhost:5000';
   useEffect(() => {
-    // Connect to the Flask-SocketIO server
-    const newSocket = io('http://localhost:5000', {
-      transports: ['websocket']
+    console.log('Initializing Socket.IO connection...');
+    
+    // Connect with proper Socket.IO client options for Flask-SocketIO
+    const newSocket = io(SERVER_URL, {
+      transports: ['polling', 'websocket'], // Try polling first
+      upgrade: true,
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionAttempts: 5,
+      timeout: 20000
     });
 
     newSocket.on('connect', () => {
-      console.log('Connected to server');
+      console.log('✅ Connected to server');
       setIsConnected(true);
     });
 
     newSocket.on('disconnect', () => {
-      console.log('Disconnected from server');
+      console.log('❌ Disconnected from server');
       setIsConnected(false);
     });
 
     newSocket.on('message', (data) => {
-      console.log('Received:', data);
+      console.log('📨 Received message:', data);
       setRandomNumber(data.randomNumber);
       setBooleanValue(data.boolean);
     });
 
     newSocket.on('connect_error', (error) => {
-      console.error('Connection error:', error);
+      console.error('❌ Connection error:', error.message);
       setIsConnected(false);
     });
 
     newSocket.on('button_ack', (data) => {
-      console.log('Server acknowledged button toggle:', data);
+      console.log('✅ Button acknowledged:', data);
     });
 
     newSocket.on('datetime_ack', (data) => {
-      console.log('Server acknowledged datetime change:', data);
+      console.log('✅ DateTime acknowledged:', data);
     });
 
     setSocket(newSocket);
 
-    // Cleanup on unmount
     return () => {
+      console.log('🔌 Cleaning up socket connection');
       newSocket.close();
     };
   }, []);
@@ -59,13 +70,12 @@ function App() {
     setButtonState(newButtonState);
     
     if (socket && isConnected) {
-      // Emit the toggle event to the server
       socket.emit('toggle_button', {
         buttonState: newButtonState,
         clientId: clientId,
         timestamp: new Date().toISOString()
       });
-      console.log(`Button toggled to: ${newButtonState}`);
+      console.log(`📤 Button toggled to: ${newButtonState}`);
     }
   };
 
@@ -74,14 +84,13 @@ function App() {
     setDatetimeValue(newDatetimeValue);
     
     if (socket && isConnected && newDatetimeValue) {
-      // Emit the datetime change event to the server
       socket.emit('datetime_change', {
         datetimeValue: newDatetimeValue,
         clientId: clientId,
         inputType: 'datetime-local',
         timestamp: new Date().toISOString()
       });
-      console.log(`Datetime changed to: ${newDatetimeValue}`);
+      console.log(`📤 Datetime changed to: ${newDatetimeValue}`);
     }
   };
 
@@ -140,11 +149,6 @@ function App() {
               disabled={!isConnected}
               className={`datetime-input ${!isConnected ? 'disabled' : ''}`}
             />
-            <div className="input-icon">
-              <svg className="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
           </div>
           {datetimeValue && (
             <p className="datetime-display">
@@ -178,7 +182,7 @@ function App() {
             <div>Client Button: {buttonState.toString()}</div>
             <div>DateTime: {datetimeValue || 'Not selected'}</div>
             <div>Client ID: {clientId}</div>
-            <div>Updates: 2 per second</div>
+            <div>Transport: Socket.IO (polling + websocket)</div>
           </div>
         </div>
       </div>
@@ -187,3 +191,4 @@ function App() {
 }
 
 export default App;
+
