@@ -14,11 +14,13 @@ function App() {
   const [buttonState, setButtonState] = useState(false);
   const [clientId] = useState(() => Math.random().toString(36).substr(2, 9));
   const [datetimeValue, setDatetimeValue] = useState('');
-  const SERVER_URL = process.env(REACT_APP_SERVER_URL) || 'localhost:5000';
+
   useEffect(() => {
     console.log('Initializing Socket.IO connection...');
     
     // Connect with proper Socket.IO client options for Flask-SocketIO
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+
     const newSocket = io(SERVER_URL, {
       transports: ['polling', 'websocket'], // Try polling first
       upgrade: true,
