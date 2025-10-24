@@ -2,13 +2,19 @@
 python3 --version  # Should show 3.8.10
 
 # Install dependencies
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
+
+# install server port
+echo 'export REACT_SOCKETIO_SERVER_PORT=5100' >> ~/.bashrc
+chmod +x ~/.bashrc
+source ~/.bashrc
+echo $REACT_SOCKETIO_SERVER_PORT
 
 # Run development server
 python3 run_server.py
 # or directly:
 python3 server.py
 
-# Run production server
+# Run production WSIG server
 gunicorn -c gunicorn.conf.py server:app
 

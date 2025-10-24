@@ -1,5 +1,7 @@
+import os
 # Gunicorn configuration file for Python 3.8.10 compatibility
-bind = "0.0.0.0:5000"
+port = os.getenv("REACT_SOCKETIO_SERVER_PORT",5000)
+bind = "0.0.0.0:"+str(port)
 workers = 1
 worker_class = "eventlet"
 worker_connections = 1000

@@ -4,6 +4,9 @@
 Diagnostic script to check WebSocket server setup
 """
 import sys
+import os
+port = os.getenv("REACT_SOCKETIO_SERVER_PORT",5000)
+print(f"{port=}")
 
 def check_python_version():
     """Check Python version"""
@@ -55,21 +58,21 @@ def test_server_import():
         return False
 
 def check_port():
-    """Check if port 5000 is available"""
-    print("\n🔌 Checking port 5000:")
+    """Check if the assigned port is available"""
+    print("\n🔌 Checking port " +str(port) + ":")
     import socket
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.settimeout(1)
-        result = sock.connect_ex(('localhost', 5000))
+        result = sock.connect_ex(('localhost', port))
         sock.close()
         
         if result == 0:
-            print("⚠️  Port 5000 is already in use")
+            print("⚠️  Port " + str(port) + " is already in use")
             print("   Either a server is running, or another app is using the port")
             return False
         else:
-            print("✅ Port 5000 is available")
+            print("✅ Port " + str(port) + "  is available")
             return True
     except Exception as e:
         print(f"⚠️  Could not check port: {e}")
@@ -85,9 +88,9 @@ def check_firewall():
         print(f"✅ Hostname: {hostname}")
         print(f"✅ IP Address: {ip}")
         print(f"   Server will be accessible at:")
-        print(f"   - http://localhost:5000")
-        print(f"   - http://127.0.0.1:5000")
-        print(f"   - http://{ip}:5000 (from other devices on network)")
+        print(f"   - http://localhost:" + str(port))
+        print(f"   - http://127.0.0.1:" + str(port))
+        print(f"   - http://{ip}:" + str(port) + " (from other devices on network)")
         return True
     except Exception as e:
         print(f"⚠️  Network check warning: {e}")
@@ -100,9 +103,9 @@ def print_recommendations():
     print("2. Client: Node.js 20.x LTS (recommended)")
     print("3. Install packages: pip install -r requirements-minimal.txt")
     print("4. Start server: python3 simple_run.py")
-    print("5. Open browser: http://localhost:5000")
+    print("5. Open browser: http://localhost:" + str(port))
     print("\n📝 If client can't connect:")
-    print("- Check server is running: netstat -an | grep 5000")
+    print("- Check server is running: netstat -an | grep " + str(port))
     print("- Check browser console for errors (F12)")
     print("- Try different browser (Chrome recommended)")
     print("- Disable browser extensions that might block WebSocket")

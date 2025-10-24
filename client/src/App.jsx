@@ -19,7 +19,8 @@ function App() {
     console.log('Initializing Socket.IO connection...');
     
     // Connect with proper Socket.IO client options for Flask-SocketIO
-    const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:5000';
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL+":"+process.env.REACT_APP_SERVER_PORT || 'http://localhost:5000';
+    console.log(SERVER_URL)
 
     const newSocket = io(SERVER_URL, {
       transports: ['polling', 'websocket'], // Try polling first

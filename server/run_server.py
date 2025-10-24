@@ -10,7 +10,7 @@ import time
 
 # Global variable to track server process
 server_process = None
-
+port = os.getenv("REACT_SOCKETIO_SERVER_PORT",5000)
 def signal_handler(sig, frame):
     """Handle Ctrl-C signal and terminate server gracefully"""
     global server_process
@@ -85,7 +85,7 @@ def run_development_server():
         
         socketio.run(app, 
                     host='0.0.0.0', 
-                    port=5000, 
+                    port=port, 
                     debug=True, 
                     use_reloader=False,
                     allow_unsafe_werkzeug=True)

@@ -36,7 +36,7 @@ socketio = SocketIO(app,
 bool_state = True
 running = False
 clients_connected = 0
-
+port = os.getenv("REACT_SOCKETIO_SERVER_PORT",5000)
 def signal_handler(sig, frame):
     """Handle shutdown signals gracefully"""
     global running
@@ -175,17 +175,16 @@ if __name__ == '__main__':
     print("WebSocket Server - Recursion-Free Version")
     print("Python version:", sys.version)
     print("Async mode: threading")
-    print("Server will be available at: http://localhost:5000")
+    print("Server will be available at: http://localhost:"+str(port))
     print("Press Ctrl-C to stop the server")
     print("=" * 50)
     
     try:
         socketio.run(app, 
                     host='0.0.0.0', 
-                    port=5000,
+                    port=port,
                     debug=False,
-                    use_reloader=False,
-                    allow_unsafe_werkzeug=True)
+                    use_reloader=False)
     except KeyboardInterrupt:
         print("\n🛑 Server stopped by user (Ctrl-C)")
         running = False
