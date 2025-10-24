@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/py_react_socketio_example/static/css/main.ec370865.css",
+    "main.js": "/py_react_socketio_example/static/js/main.d406d370.js",
+    "index.html": "/py_react_socketio_example/index.html",
+    "main.ec370865.css.map": "/py_react_socketio_example/static/css/main.ec370865.css.map",
+    "main.d406d370.js.map": "/py_react_socketio_example/static/js/main.d406d370.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ec370865.css",
+    "static/js/main.d406d370.js"
+  ]
+}

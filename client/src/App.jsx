@@ -19,10 +19,16 @@ function App() {
     console.log('Initializing Socket.IO connection...');
     
     // Connect with proper Socket.IO client options for Flask-SocketIO
-    const SERVER_URL = process.env.REACT_APP_SERVER_URL+":"+process.env.REACT_APP_SERVER_PORT || 'http://localhost:5000';
+    // If not reverse proxied:
+    // const SERVER_URL = process.env.REACT_APP_SERVER_URL+":"+process.env.REACT_APP_SERVER_PORT || 'http://localhost:5000';
+
+    // If reverse proxied:
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
     console.log(SERVER_URL)
 
     const newSocket = io(SERVER_URL, {
+      path: "/py_react_socketio_example/socket.io/",
       transports: ['polling', 'websocket'], // Try polling first
       upgrade: true,
       reconnection: true,

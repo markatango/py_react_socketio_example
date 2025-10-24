@@ -1,3 +1,4 @@
+
 """
 Flask-SocketIO WebSocket Server - Python 3.8.10 Compatible
 Recursion-free implementation with proper shutdown handling
@@ -24,7 +25,8 @@ app.config['DEBUG'] = False  # Disable debug mode
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Initialize SocketIO without eventlet to avoid recursion
-socketio = SocketIO(app, 
+socketio = SocketIO(app,
+                   path="/py_react_socketio_example/socket.io/", 
                    cors_allowed_origins="*",
                    async_mode='threading',  # Use threading instead of eventlet
                    logger=False,
