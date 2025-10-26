@@ -1,0 +1,36 @@
+[Unit]
+Description=React SocketIO Demo Server
+After=network.target
+
+[Service]
+Type=simple
+User=mark
+Group=mark
+WorkingDirectory=/opt/py_react_socketio_example/server
+
+# Use the virtual environment's Python directly
+Environment="PATH=/opt/py_react_socketio_example/server/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="VIRTUAL_ENV=/opt/py_react_socketio_example/server/venv"
+Environment="REACT_SOCKETIO_SERVER_PORT=5200"
+
+# Run gunicorn directly from venv, not through run_prod_server.py
+ExecStart=/opt/py_react_socketio_example/server/venv/bin/gunicorn \
+    -c gunicorn.conf.py \
+    server:app
+
+# Restart configuration
+Restart=always
+RestartSec=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=react-socketio
+
+# Security hardening (optional but recommended)
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
